@@ -8,153 +8,266 @@
     <title>For Hassan</title>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&family=Pacifico&display=swap');
 
         * {
             box-sizing: border-box;
         }
 
+        html,
         body {
             margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
+
+        body {
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 25px;
 
             font-family: 'Quicksand', sans-serif;
 
-            background:
-                radial-gradient(circle at top left, #fff1f5, transparent 40%),
-                radial-gradient(circle at bottom right, #eee7ff, transparent 40%),
-                #faf8ff;
+            /* Light purple checkered background */
+            background-color: #f3edfa;
+            background-image:
+                linear-gradient(45deg, #e9def3 25%, transparent 25%),
+                linear-gradient(-45deg, #e9def3 25%, transparent 25%),
+                linear-gradient(45deg, transparent 75%, #e9def3 75%),
+                linear-gradient(-45deg, transparent 75%, #e9def3 75%);
+            background-size: 42px 42px;
+            background-position:
+                0 0,
+                0 21px,
+                21px -21px,
+                -21px 0;
         }
 
-        .card {
+        /* Main white note */
+        .note {
             width: 100%;
-            max-width: 430px;
-            min-height: 300px;
+            max-width: 520px;
+            min-height: 340px;
 
-            background: rgba(255, 255, 255, 0.92);
+            background: #ffffff;
 
-            border-radius: 28px;
+            padding: 50px 35px;
 
-            padding: 45px 30px;
+            border-radius: 4px;
+
+            text-align: center;
+
+            box-shadow:
+                0 12px 30px rgba(91, 65, 110, 0.15),
+                0 2px 5px rgba(91, 65, 110, 0.08);
+
+            position: relative;
+
+            transition: all 0.5s ease;
+        }
+
+        /* Small decorative tape */
+        .tape {
+            position: absolute;
+            top: -13px;
+            left: 50%;
+            transform: translateX(-50%) rotate(-2deg);
+
+            width: 90px;
+            height: 27px;
+
+            background: rgba(207, 188, 221, 0.65);
+        }
+
+        /* Opening screen */
+        .front {
+            min-height: 230px;
 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
-            text-align: center;
-
-            box-shadow: 0 15px 40px rgba(100, 80, 120, 0.12);
-
-            transition: all 0.5s ease;
         }
 
         .front h1 {
             margin: 0 0 30px;
 
-            font-size: 32px;
+            font-family: 'Pacifico', cursive;
+            font-size: 38px;
+            font-weight: 400;
+
+            color: #70557e;
+        }
+
+        .open-button,
+        .yes-button {
+            border: none;
+            cursor: pointer;
+
+            font-family: 'Quicksand', sans-serif;
             font-weight: 700;
 
-            color: #705c82;
+            color: white;
+            background: #a98cba;
+
+            border-radius: 30px;
+
+            transition: all 0.25s ease;
+
+            box-shadow: 0 5px 12px rgba(100, 75, 115, 0.18);
         }
 
         .open-button {
-            border: none;
-
-            padding: 14px 30px;
-
-            border-radius: 50px;
-
-            background: #b9a4ce;
-            color: white;
-
-            font-family: 'Quicksand', sans-serif;
-
+            padding: 14px 32px;
             font-size: 17px;
-            font-weight: 600;
-
-            cursor: pointer;
-
-            transition: 0.3s ease;
-
-            box-shadow: 0 6px 15px rgba(120, 90, 140, 0.18);
         }
 
-        .open-button:hover {
+        .open-button:hover,
+        .yes-button:hover {
+            background: #9273a5;
             transform: translateY(-2px);
-            background: #a88fbe;
         }
 
+        /* Apology message */
         .message {
             display: none;
-            animation: fadeIn 0.8s ease;
+
+            animation: appear 0.8s ease forwards;
         }
 
         .message h2 {
             margin: 0 0 28px;
 
-            font-size: 36px;
-            font-weight: 700;
+            font-family: 'Pacifico', cursive;
+            font-size: 38px;
+            font-weight: 400;
 
-            color: #705c82;
+            color: #70557e;
         }
 
         .message p {
-            margin: 12px 0;
+            margin: 13px 0;
 
-            font-size: 21px;
+            font-size: 20px;
             line-height: 1.7;
 
             font-weight: 500;
 
-            color: #55505b;
+            color: #514957;
         }
 
-        .message .question {
-            margin-top: 28px;
+        .question {
+            margin-top: 28px !important;
 
-            font-size: 23px;
+            font-size: 23px !important;
+            font-weight: 700 !important;
+
+            color: #765584 !important;
+        }
+
+        /* Yes buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 18px;
+
+            margin-top: 30px;
+        }
+
+        .yes-button {
+            padding: 12px 28px;
+            font-size: 17px;
+        }
+
+        /* Final message */
+        .final-message {
+            display: none;
+
+            min-height: 250px;
+
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            animation: appear 0.8s ease forwards;
+        }
+
+        .final-message h2 {
+            margin: 0;
+
+            font-family: 'Pacifico', cursive;
+            font-size: 42px;
+            font-weight: 400;
+
+            color: #70557e;
+        }
+
+        .final-message p {
+            margin-top: 20px;
+
+            font-family: 'Quicksand', sans-serif;
+            font-size: 24px;
             font-weight: 700;
 
-            color: #806695;
+            color: #765584;
         }
 
-        @keyframes fadeIn {
+        @keyframes appear {
             from {
                 opacity: 0;
-                transform: translateY(12px);
+                transform: translateY(15px) scale(0.97);
             }
 
             to {
                 opacity: 1;
-                transform: translateY(0);
+                transform: translateY(0) scale(1);
             }
         }
 
+        /* Mobile */
         @media (max-width: 480px) {
 
-            .card {
-                padding: 40px 25px;
+            body {
+                padding: 18px;
+            }
+
+            .note {
+                padding: 45px 23px;
             }
 
             .front h1 {
-                font-size: 28px;
+                font-size: 33px;
             }
 
             .message h2 {
-                font-size: 32px;
+                font-size: 34px;
             }
 
             .message p {
-                font-size: 19px;
+                font-size: 18px;
             }
 
-            .message .question {
+            .question {
+                font-size: 21px !important;
+            }
+
+            .final-message h2 {
+                font-size: 36px;
+            }
+
+            .final-message p {
                 font-size: 21px;
+            }
+
+            .buttons {
+                gap: 12px;
+            }
+
+            .yes-button {
+                padding: 11px 24px;
             }
         }
     </style>
@@ -162,10 +275,11 @@
 
 <body>
 
-    <div class="card">
+    <div class="note">
 
-        <!-- FIRST SCREEN -->
+        <div class="tape"></div>
 
+        <!-- Opening screen -->
         <div class="front" id="front">
 
             <h1>For Hassan</h1>
@@ -177,8 +291,7 @@
         </div>
 
 
-        <!-- MESSAGE INSIDE THE CARD -->
-
+        <!-- Apology message -->
         <div class="message" id="message">
 
             <h2>Hassannn</h2>
@@ -192,8 +305,28 @@
             </p>
 
             <p class="question">
-                Can you just give us one last chance pleaseeeeee?
+                Will you give me one last chance?
             </p>
+
+            <div class="buttons">
+
+                <button class="yes-button" onclick="showFinalMessage()">
+                    Yes
+                </button>
+
+                <button class="yes-button" onclick="showFinalMessage()">
+                    Yes
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- Final message -->
+        <div class="final-message" id="finalMessage">
+
+            <h2>You are the best 💜</h2>
 
         </div>
 
@@ -207,6 +340,15 @@
             document.getElementById("front").style.display = "none";
 
             document.getElementById("message").style.display = "block";
+
+        }
+
+
+        function showFinalMessage() {
+
+            document.getElementById("message").style.display = "none";
+
+            document.getElementById("finalMessage").style.display = "flex";
 
         }
 
